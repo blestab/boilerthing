@@ -1,21 +1,22 @@
 import "dotenv/config"
-// make sure to install dotenv package
 import { defineConfig } from "drizzle-kit"
+import { parse } from "pg-connection-string"
+
+const dbUrl = process.env.DATABASE_URL!
+const dbConfig = parse(dbUrl)
 
 export default defineConfig({
   dialect: "postgresql",
   out: "./src/drizzle",
   schema: "./src/drizzle/schema.ts",
   dbCredentials: {
-    host: process.env.DB_HOST!,
-    port: Number(process.env.DB_PORT!),
-    user: process.env.DB_USERNAME!,
-    password: process.env.DB_PASSWORD!,
-    database: process.env.DB_NAME!,
-    ssl: false, // Disable SSL connections
+    host: dbConfig.host!,
+    port: Number(dbConfig.port!),
+    user: dbConfig.user!,
+    password: dbConfig.password!,
+    database: dbConfig.database!,
+    ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : false,
   },
-  // Print all statements
   verbose: true,
-  // Always ask for confirmation
   strict: true,
 })

@@ -1,26 +1,29 @@
-import { db } from "@/lib/db"
+import { eq } from "drizzle-orm"
+import { db } from "@/drizzle/db"
+import { User } from "@/drizzle/schema"
 
 export async function getUserByEmail(email: string) {
   try {
-    const user = await db.user.findUnique({ where: { email } })
-
+    const user = await db
+      .select()
+      .from(User)
+      .where(eq(User.email, email))
+      .execute()
     return user
-  } catch {
+  } catch (error) {
     return null
   }
 }
 
 export async function getUserById(id: string) {
   try {
-    const user = await db.user.findUnique({
-      where: { id },
-      include: {
-        accounts: true,
-      },
-    })
-
-    return user
-  } catch {
+    const userWithAccount = await db
+      .select()
+      .from(User)
+      .where(eq(User.id, id))
+      .execute()
+    return userWithAccount
+  } catch (error) {
     return null
   }
 }
