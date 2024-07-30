@@ -1,11 +1,13 @@
-import { PrismaAdapter } from "@auth/prisma-adapter"
+import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import { UserRole } from "@prisma/client"
 import NextAuth from "next-auth"
+import { Adapter } from "next-auth/adapters"
 import Github from "next-auth/providers/github"
 import Google from "next-auth/providers/google"
 import { getUserById } from "@/lib/auth/db/user"
-import { db } from "@/lib/db"
 import { env } from "@/../.env.mjs"
+import { db } from "@/drizzle/db"
+import { User } from "@/drizzle/schema"
 
 export const {
   handlers: { GET, POST },
@@ -19,7 +21,7 @@ export const {
     newUser: "/dashboard",
     error: "/error",
   },
-  adapter: PrismaAdapter(db),
+  adapter: DrizzleAdapter(db) as Adapter,
   session: { strategy: "jwt" },
   providers: [
     Google({

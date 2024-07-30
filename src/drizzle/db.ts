@@ -1,14 +1,13 @@
 import { drizzle } from "drizzle-orm/node-postgres"
-import { Client } from "pg"
+import { Pool } from "pg"
 import * as schema from "./schema"
 
-export const client = new Client({
-  host: process.env.DB_HOST!,
-  port: Number(process.env.DB_PORT!),
-  user: process.env.DB_USERNAME!,
-  password: process.env.DB_PASSWORD!,
-  database: process.env.DB_NAME!,
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : false,
 })
 
-// { schema } is used for relational queries
-export const db = drizzle(client, { schema })
+const db = drizzle(pool, { schema })
+
+export const client = pool
+export { db }

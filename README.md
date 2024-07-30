@@ -10,7 +10,7 @@ See it in action: [https://boilerthing.vercel.app](https://boilerthing.vercel.ap
 
 ## TL;DR
 
-> Free and open-source **[Next.js 14](https://nextjs.org/)** Boilerplate with (App Router), **[Next-auth (v5)](https://auth.js.org/)**, **[Next-intl](https://next-intl-docs.vercel.app/)** (translated routes), **[Prisma ORM](https://www.prisma.io/)**, **[Resend](https://resend.com/)**, **[Tailwind CSS](https://tailwindcss.com/)**, and **[Shadcn/UI](https://ui.shadcn.com/)** & **[Radix UI](https://www.radix-ui.com/)**, plus many other features.
+> Free and open-source **[Next.js 14](https://nextjs.org/)** Boilerplate with (App Router), **[Next-auth (v5)](https://auth.js.org/)**, **[Next-intl](https://next-intl-docs.vercel.app/)** (translated routes), **[Drizzle ORM](https://orm.drizzle.team/)**, **[Resend](https://resend.com/)**, **[Tailwind CSS](https://tailwindcss.com/)**, and **[Shadcn/UI](https://ui.shadcn.com/)** & **[Radix UI](https://www.radix-ui.com/)**, plus many other features.
 
 ![](./public/boilerthing-preview-202405180221.jpg)
 
@@ -21,7 +21,7 @@ See it in action: [https://boilerthing.vercel.app](https://boilerthing.vercel.ap
 - ✅ **TypeScript** for type checking
 - 🔑 **Next-auth v5** for flexible authentication
 - 🌐 **Next-intl** for translations (i18n) and translated routes
-- 🗄️ **Prisma ORM** for database convenience
+- 🗄️ **Drizzle ORM** for database convenience
 - 🐳 **Docker Compose** for easy DB setup
 - 🎨 **Tailwind CSS** 3.4
 - 📱 **Mobile-first** Design approach
@@ -45,11 +45,10 @@ See it in action: [https://boilerthing.vercel.app](https://boilerthing.vercel.ap
    docker run --name boilerthing -p 5432:5432 -d -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=boilerthing postgres:latest
    ```
 
-2. Initialize `prisma`:
+2. Initialize `drizzle`:
 
    ```bash
-   npx prisma generate
-   npx prisma db push
+   npx drizzle-kit migrate
    ```
 
 3. Populate `.env` based on `.env.example`
