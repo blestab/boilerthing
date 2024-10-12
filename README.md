@@ -45,13 +45,13 @@ See it in action: [https://boilerthing.vercel.app](https://boilerthing.vercel.ap
    docker run --name boilerthing -p 5432:5432 -d -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=boilerthing postgres:latest
    ```
 
-2. Initialize `drizzle`:
+2. Populate `.env` based on `.env.example`
+
+3. Run db migrations
 
    ```bash
    npx drizzle-kit migrate
    ```
-
-3. Populate `.env` based on `.env.example`
 
 4. Run the development server:
    ```bash

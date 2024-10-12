@@ -1,13 +1,12 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
-import { UserRole } from "@prisma/client"
 import NextAuth from "next-auth"
 import { Adapter } from "next-auth/adapters"
 import Github from "next-auth/providers/github"
 import Google from "next-auth/providers/google"
 import { getUserById } from "@/lib/auth/db/user"
+import { db } from "@/lib/db"
+import * as schema from "@/lib/db/schema"
 import { env } from "@/../.env.mjs"
-import { db } from "@/drizzle/db"
-import { User } from "@/drizzle/schema"
 
 export const {
   handlers: { GET, POST },
@@ -21,7 +20,11 @@ export const {
     newUser: "/dashboard",
     error: "/error",
   },
-  adapter: DrizzleAdapter(db) as Adapter,
+  adapter: DrizzleAdapter(db, {
+    usersTable: schema.user,
+    accountsTable: schema.account,
+    sessionsTable: schema.session,
+  }) as Adapter,
   session: { strategy: "jwt" },
   providers: [
     Google({
@@ -39,7 +42,9 @@ export const {
         return token
       }
 
-      const existingUser = await getUserById(token.sub)
+      const existingUser = await getUserById(token.sub).then(user => {
+        return user
+      })
 
       if (!existingUser) {
         return token
@@ -57,7 +62,7 @@ export const {
         }
 
         if (token.role && session.user) {
-          session.user.role = token.role as UserRole
+          session.user.role = token.role as string
         }
 
         if (token.createdAt && session.user) {
