@@ -20,6 +20,7 @@ export const UserRole = pgEnum("user_role", ["ADMIN", "USER"])
 export const user = pgTable("user", {
   id: text("id")
     .primaryKey()
+    .notNull()
     .$defaultFn(() => crypto.randomUUID()),
   name: text("name"),
   email: text("email").notNull(),
