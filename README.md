@@ -22,7 +22,6 @@ See it in action: [https://boilerthing.vercel.app](https://boilerthing.vercel.ap
 - 🔑 **Next-auth v5** for flexible authentication
 - 🌐 **Next-intl** for translations (i18n) and translated routes
 - 🗄️ **Drizzle ORM** for database convenience
-- 🗄️ **Drizzle ORM** for database convenience
 - 🐳 **Docker Compose** for easy DB setup
 - 🎨 **Tailwind CSS** 3.4
 - 📱 **Mobile-first** Design approach
